@@ -3,9 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pathlib import Path
-from scoring import router as scoring_router
-from models import router as providers_router
-from config import settings
+from app.api.v1 import scoring, providers, health
+from app.core.config import settings
 
 app = FastAPI(
     title="Credit Risk Scoring API",
@@ -26,16 +25,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Health endpoint
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "version": "1.0.0"}
-
-app.include_router(providers_router, prefix="/api/v1", tags=["Providers"])
-app.include_router(scoring_router, prefix="/api/v1", tags=["Scoring"])
+app.include_router(health.router, tags=["Health"])
+app.include_router(providers.router, prefix="/api/v1", tags=["Providers"])
+app.include_router(scoring.router, prefix="/api/v1", tags=["Scoring"])
 
 # Serve dashboard
-STATIC_DIR = Path(__file__).parent / "static"
+STATIC_DIR = Path(__file__).parent.parent / "static"
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
