@@ -899,48 +899,37 @@
 
       const FEATURE_GROUPS = [
         {
-          name: "Applicant Profile",
-          icon: "👤",
+          name: "Loan Details",
+          icon: "💰",
           fields: [
-            "AMT_INCOME_TOTAL",
-            "AMT_CREDIT",
-            "AMT_ANNUITY",
-            "EXT_SOURCE_1",
-            "EXT_SOURCE_2",
-            "EXT_SOURCE_3",
-          ],
-        },
-        {
-          name: "Payment Behavior",
-          icon: "💳",
-          fields: [
-            "late_payment_rate",
-            "min_payment_ratio",
-            "max_days_past_due",
-            "total_underpayment",
-            "total_installments",
-            "avg_days_past_due",
-          ],
-        },
-        {
-          name: "Trends",
-          icon: "📈",
-          fields: [
-            "late_rate_trend",
-            "recent_late_rate",
-            "payment_ratio_trend",
-            "recent_min_payment_ratio",
+            { key: "AMT_CREDIT", label: "Credit Amount", placeholder: "Total credit requested" },
+            { key: "AMT_GOODS_PRICE", label: "Goods Price", placeholder: "Price of goods/services" },
           ],
         },
         {
           name: "External Credit",
           icon: "🏦",
           fields: [
-            "num_active_loans",
-            "external_utilization",
-            "total_external_debt",
-            "has_any_overdue",
-            "prev_refusal_rate",
+            { key: "total_external_credit", label: "Total External Credit", placeholder: "Credit elsewhere" },
+            { key: "total_external_debt", label: "Total External Debt", placeholder: "Debt elsewhere" },
+            { key: "num_active_loans", label: "Active Loans", placeholder: "Number of open loans" },
+          ],
+        },
+        {
+          name: "Payment History",
+          icon: "💳",
+          fields: [
+            { key: "late_payment_rate", label: "Late Payment Rate", placeholder: "0.0 - 1.0" },
+            { key: "recent_late_rate", label: "Recent Late Rate", placeholder: "Last 6 payments" },
+          ],
+        },
+        {
+          name: "Applicant Profile",
+          icon: "👤",
+          fields: [
+            { key: "DAYS_BIRTH", label: "Days Since Birth", placeholder: "Negative = years ago" },
+            { key: "DAYS_EMPLOYED", label: "Days Employed", placeholder: "Negative = years employed" },
+            { key: "prev_refusal_rate", label: "Prev Refusal Rate", placeholder: "0.0 - 1.0" },
           ],
         },
       ];
@@ -949,6 +938,98 @@
 
       // Show insights on load (default)
       document.getElementById("panel-insights").style.display = "block";
+      loadInsights();
+
+      // ── Load Insights ───────────────────────────────────────
+      async function loadInsights() {
+        try {
+          const resp = await fetch(`${BACKEND_URL}/insights`);
+          if (!resp.ok) throw new Error("Failed to load insights");
+          const data = await resp.json();
+          renderInsights(data);
+        } catch (err) {
+          console.error("Failed to load insights:", err);
+        }
+      }
+
+      // ── Render Insights ───────────────────────────────────────
+      function renderInsights(data) {
+        const { dataset_stats, model_performance, feature_importance, key_insight } = data;
+        
+        // Update dataset stats
+        const statCards = document.querySelectorAll("#panel-insights .card");
+        if (statCards.length >= 4 && dataset_stats) {
+          statCards[0].querySelector("div:nth-child(2)").textContent = (dataset_stats.total_applicants / 1000).toFixed(0) + "K";
+          statCards[1].querySelector("div:nth-child(2)").textContent = (dataset_stats.payment_records / 1000000).toFixed(1) + "M";
+          statCards[2].querySelector("div:nth-child(2)").textContent = (dataset_stats.bureau_records / 1000000).toFixed(1) + "M";
+          statCards[3].querySelector("div:nth-child(2)").textContent = dataset_stats.num_features;
+        }
+
+        // Update model performance bars
+        if (model_performance) {
+          const bars = document.querySelectorAll("#panel-insights .card:nth-child(2) > div > div");
+          if (bars.length >= 4) {
+            const maxAuc = 0.77;
+            const minAuc = 0.74;
+            const scale = (auc) => Math.floor(((auc - minAuc) / (maxAuc - minAuc)) * 100 + 80);
+            
+            // Update bar heights and values
+            bars[0].style.height = scale(model_performance.logistic_regression) + "px";
+            bars[0].querySelector("div:nth-child(2)").textContent = model_performance.logistic_regression.toFixed(3);
+            
+            bars[1].style.height = scale(model_performance.random_forest) + "px";
+            bars[1].querySelector("div:nth-child(2)").textContent = model_performance.random_forest.toFixed(3);
+            
+            bars[2].style.height = scale(model_performance.neural_network) + "px";
+            bars[2].querySelector("div:nth-child(2)").textContent = model_performance.neural_network.toFixed(3);
+            
+            bars[3].style.height = scale(model_performance.xgboost) + "px";
+            bars[3].querySelector("div:nth-child(2)").textContent = model_performance.xgboost.toFixed(3);
+          }
+        }
+
+        // Update feature importance chart
+        if (feature_importance) {
+          const chartContainer = document.getElementById("feature-importance-chart");
+          if (chartContainer) {
+            let html = "";
+            const entries = Object.entries(feature_importance);
+            const maxVal = Math.max(...entries.map(([, v]) => Math.abs(v)), 0.01);
+            
+            entries.forEach(([name, value]) => {
+              const width = Math.min((Math.abs(value) / maxVal) * 100, 100);
+              const isPositive = value > 0;
+              const barColor = isPositive 
+                ? "linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8))"
+                : "linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8))";
+              const textColor = isPositive ? "#f87171" : "#34d399";
+              const sign = isPositive ? "+" : "";
+              
+              html += `
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                  <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">${name}</span></div>
+                  <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                    <div style="position: absolute; left: 0; top: 0; height: 100%; width: ${width}%; background: ${barColor};"></div>
+                  </div>
+                  <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: ${textColor};">${sign}${value.toFixed(2)}</span></div>
+                </div>`;
+            });
+            chartContainer.innerHTML = html;
+          }
+        }
+
+        // Update key insight
+        if (key_insight) {
+          const insightCard = document.querySelector("#panel-insights .card:last-child");
+          if (insightCard) {
+            const values = insightCard.querySelectorAll("div div:nth-child(2)");
+            if (values.length >= 2) {
+              values[0].textContent = key_insight.good_borrowers_value.toFixed(2);
+              values[1].textContent = key_insight.defaulters_value.toFixed(2);
+            }
+          }
+        }
+      }
 
       // ── Tab switching ───────────────────────────────────────
       function switchTab(tab) {
@@ -969,13 +1050,19 @@
         FEATURE_GROUPS.forEach((group) => {
           html += `<div class="card" style="padding: 20px; margin-bottom: 16px;">
                     <h3 class="heading" style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 16px;">${group.icon} ${group.name}</h3>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">`;
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">`;
           group.fields.forEach((f) => {
-            html += `<div><label style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">${f}</label>
-                        <input type="number" step="any" id="custom-${f}" placeholder="0"></div>`;
+            html += `<div>
+                      <label style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">${f.label}</label>
+                      <input type="number" step="any" id="custom-${f.key}" placeholder="${f.placeholder}"></div>`;
           });
           html += `</div></div>`;
         });
+        html += `<div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                  <p style="font-size: 11px; color: #64748b; margin-bottom: 8px;">
+                    <span style="color: #10b981;">ℹ️</span> Other features (external scores, payment ratios, etc.) will be auto-calculated with sensible defaults.
+                  </p>
+                </div>`;
         html += `<button class="btn-primary heading" onclick="scoreCustom()">Run Credit Assessment →</button>`;
         panel.innerHTML = html;
       }
@@ -1014,13 +1101,112 @@
 
       // ── Score custom ────────────────────────────────────────
       function scoreCustom() {
-        const data = { AMT_INCOME_TOTAL: 0, AMT_CREDIT: 0 };
-        FEATURE_GROUPS.forEach((g) =>
-          g.fields.forEach((f) => {
-            const el = document.getElementById(`custom-${f}`);
-            if (el && el.value) data[f] = parseFloat(el.value);
-          }),
-        );
+        // Get values from the 10 key inputs
+        const getVal = (key, def = 0) => {
+          const el = document.getElementById(`custom-${key}`);
+          return el && el.value ? parseFloat(el.value) : def;
+        };
+
+        const AMT_CREDIT = getVal("AMT_CREDIT", 500000);
+        const AMT_GOODS_PRICE = getVal("AMT_GOODS_PRICE", 450000);
+        const total_external_credit = getVal("total_external_credit", 800000);
+        const total_external_debt = getVal("total_external_debt", 200000);
+        const num_active_loans = getVal("num_active_loans", 2);
+        const late_payment_rate = getVal("late_payment_rate", 0.05);
+        const recent_late_rate = getVal("recent_late_rate", 0.05);
+        const DAYS_BIRTH = getVal("DAYS_BIRTH", -15000);
+        const DAYS_EMPLOYED = getVal("DAYS_EMPLOYED", -1200);
+        const prev_refusal_rate = getVal("prev_refusal_rate", 0.1);
+
+        // Compute derived features
+        const CREDIT_TO_GOODS = AMT_GOODS_PRICE > 0 ? AMT_CREDIT / AMT_GOODS_PRICE : 1.1;
+        const external_utilization = total_external_credit > 0 ? total_external_debt / total_external_credit : 0.25;
+        const AMT_INCOME_TOTAL = 150000; // Default income
+        const AMT_ANNUITY = AMT_CREDIT * 0.05; // Default annuity (5% of credit)
+        const EXT_SOURCE_1 = 0.5 - (late_payment_rate * 0.3); // External score based on payment history
+        const EXT_SOURCE_2 = 0.5 - (prev_refusal_rate * 0.2);
+        const EXT_SOURCE_3 = 0.5;
+
+        // Build the full feature set
+        const data = {
+          // Core inputs
+          AMT_INCOME_TOTAL,
+          AMT_CREDIT,
+          AMT_ANNUITY,
+          AMT_GOODS_PRICE,
+          DAYS_EMPLOYED,
+          DAYS_BIRTH,
+          DAYS_REGISTRATION: -5000,
+          EXT_SOURCE_1,
+          EXT_SOURCE_2,
+          EXT_SOURCE_3,
+          REGION_RATING_CLIENT: 2,
+          
+          // Derived features
+          CREDIT_TO_INCOME: AMT_CREDIT / AMT_INCOME_TOTAL,
+          ANNUITY_TO_INCOME: AMT_ANNUITY / AMT_INCOME_TOTAL,
+          CREDIT_TO_GOODS,
+          
+          // Payment behavior (defaults with user input influence)
+          avg_days_past_due: late_payment_rate * 30 - 10,
+          avg_payment_ratio: 1.0 - (late_payment_rate * 0.3),
+          late_payment_rate,
+          severe_late_rate: late_payment_rate * 0.3,
+          total_underpayment: late_payment_rate * AMT_CREDIT * 0.1,
+          std_days_past_due: 10 + (late_payment_rate * 20),
+          std_payment_ratio: late_payment_rate * 0.2,
+          max_days_past_due: late_payment_rate * 60,
+          min_payment_ratio: 1.0 - (late_payment_rate * 0.5),
+          total_installments: 40,
+          num_contracts: 3,
+          
+          // Trends
+          late_rate_trend: recent_late_rate - late_payment_rate,
+          payment_ratio_trend: 0,
+          recent_late_rate,
+          recent_avg_days_late: recent_late_rate * 20 - 10,
+          recent_min_payment_ratio: 1.0 - (recent_late_rate * 0.4),
+          
+          // Bureau features
+          num_bureau_records: num_active_loans + 3,
+          num_active_loans,
+          num_closed_loans: 3,
+          total_external_debt,
+          total_external_credit,
+          total_overdue_amount: late_payment_rate * total_external_debt * 0.2,
+          max_days_overdue: late_payment_rate * 90,
+          has_any_overdue: late_payment_rate > 0.1 ? 1 : 0,
+          num_credit_types: Math.min(num_active_loans + 1, 4),
+          active_loan_ratio: num_active_loans / (num_active_loans + 3),
+          external_utilization,
+          
+          // POS features
+          pos_months_count: 20,
+          pos_dpd_max: 0,
+          pos_dpd_mean: 0,
+          pos_has_dpd: 0,
+          pos_completed_count: 5,
+          pos_active_count: 1,
+          
+          // Credit card features
+          cc_months_count: 12,
+          cc_avg_balance: 50000,
+          cc_max_balance: 100000,
+          cc_avg_credit_limit: 200000,
+          cc_avg_drawings: 20000,
+          cc_dpd_max: 0,
+          cc_has_dpd: 0,
+          cc_min_payment_ratio: 10,
+          cc_utilization: 0.25,
+          
+          // Previous applications
+          prev_app_count: 3,
+          prev_approved: Math.floor(3 * (1 - prev_refusal_rate)),
+          prev_refused: Math.floor(3 * prev_refusal_rate),
+          prev_avg_credit: 300000,
+          prev_refusal_rate,
+        };
+
         callAPI(data, "Applicant");
       }
 
