@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from pathlib import Path
 from app.api.v1 import scoring, providers, health
 from app.core.config import settings
 
@@ -25,6 +28,17 @@ app.add_middleware(
 app.include_router(health.router, tags=["Health"])
 app.include_router(providers.router, prefix="/api/v1", tags=["Providers"])
 app.include_router(scoring.router, prefix="/api/v1", tags=["Scoring"])
+
+# Serve dashboard
+STATIC_DIR = Path(__file__).parent / "static"
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+
+@app.get("/", include_in_schema=False)
+async def dashboard():
+    """Serve the credit risk scoring dashboard."""
+    return FileResponse(str(STATIC_DIR / "index.html"))
 
 
 @app.on_event("startup")
