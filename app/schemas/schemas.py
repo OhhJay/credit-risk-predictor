@@ -149,6 +149,8 @@ class ScoringRequest(BaseModel):
 
 
 class ScoringResponse(BaseModel):
+    model_config = {"protected_namespaces": ()}
+    
     risk_score: float = Field(..., description="Risk score between 0 (low risk) and 1 (high risk)")
     risk_category: str = Field(..., description="low, medium, or high")
     model_version: str
