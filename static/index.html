@@ -193,10 +193,10 @@
                 class="heading"
                 style="font-size: 18px; font-weight: 700; color: white"
               >
-                Credit Risk Scoring
+                Home Credit Risk Scoring
               </h1>
               <p style="font-size: 11px; color: #64748b">
-                AI-Powered Healthcare Provider Assessment
+                AI-Powered Loan Default Prediction • 61 Features • 7 Data Sources
               </p>
             </div>
           </div>
@@ -231,17 +231,24 @@
         >
           <button
             class="tab-btn tab-active"
-            onclick="switchTab('samples')"
-            id="tab-samples"
+            onclick="switchTab('insights')"
+            id="tab-insights"
           >
-            Sample Providers
+            Insights
           </button>
           <button
             class="tab-btn tab-inactive"
-            onclick="switchTab('custom')"
-            id="tab-custom"
+            onclick="switchTab('score')"
+            id="tab-score"
           >
-            Custom Input
+            Score Applicant
+          </button>
+          <button
+            class="tab-btn tab-inactive"
+            onclick="switchTab('about')"
+            id="tab-about"
+          >
+            About
           </button>
           <button
             class="tab-btn tab-inactive"
@@ -252,313 +259,584 @@
           </button>
         </div>
 
-        <!-- Samples Tab -->
-        <div id="panel-samples">
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 16px;
-            "
-          >
-            <div
-              class="card card-hover sample-card"
-              onclick="scoreSample('low_risk')"
-              id="card-low_risk"
-              style="padding: 20px"
-            >
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: start;
-                  margin-bottom: 12px;
-                "
-              >
-                <span
-                  style="
-                    font-size: 11px;
-                    padding: 4px 10px;
-                    border-radius: 20px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    background: rgba(16, 185, 129, 0.12);
-                    color: #10b981;
-                  "
-                  >Low Risk</span
-                >
-                <span style="color: #475569">→</span>
+        <!-- Insights Tab (Default) -->
+        <div id="panel-insights">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Total Applicants</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">307K</div>
+              <div style="font-size: 10px; color: #10b981;">+ Dataset Size</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Payment Records</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">13.6M</div>
+              <div style="font-size: 10px; color: #10b981;">+ Installment Data</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Bureau Records</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">1.7M</div>
+              <div style="font-size: 10px; color: #10b981;">+ External Credit</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Features</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">61</div>
+              <div style="font-size: 10px; color: #10b981;">Engineered</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 24px; margin-bottom: 24px;">
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 20px;">
+              📊 Model Performance Comparison (AUC Score)
+            </h3>
+            <div style="display: flex; align-items: flex-end; gap: 24px; height: 200px; padding: 20px 0;">
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 148px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Logistic Regression</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.748</div>
+                </div>
               </div>
-              <h3
-                class="heading"
-                style="
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 6px;
-                  font-size: 15px;
-                "
-              >
-                HealthFirst Medical
-              </h3>
-              <p style="font-size: 11px; color: #64748b; line-height: 1.5">
-                Established supplier, clean payment history, low external debt
-              </p>
-              <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 8px;
-                  margin-top: 16px;
-                "
-              >
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Revenue: </span
-                  ><span style="color: #cbd5e1">₦320K</span>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 152px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Random Forest</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.758</div>
                 </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Late: </span
-                  ><span style="color: #cbd5e1">0.8%</span>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 152px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Neural Network</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.758</div>
                 </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Credit: </span
-                  ><span style="color: #cbd5e1">₦450K</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Ext util: </span
-                  ><span style="color: #cbd5e1">3.7%</span>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 170px; background: linear-gradient(180deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.8)); border-radius: 8px 8px 0 0; position: relative; border: 2px solid rgba(16, 185, 129, 0.5);">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">XGBoost</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #10b981;">0.770</div>
                 </div>
               </div>
             </div>
-
-            <div
-              class="card card-hover sample-card"
-              onclick="scoreSample('medium_risk')"
-              id="card-medium_risk"
-              style="padding: 20px"
-            >
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: start;
-                  margin-bottom: 12px;
-                "
-              >
-                <span
-                  style="
-                    font-size: 11px;
-                    padding: 4px 10px;
-                    border-radius: 20px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    background: rgba(245, 158, 11, 0.12);
-                    color: #f59e0b;
-                  "
-                  >Medium Risk</span
-                >
-                <span style="color: #475569">→</span>
+            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 40px; padding-top: 16px; border-top: 1px solid rgba(51, 65, 85, 0.4);">
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Improvement</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981;">+0.022 AUC</div>
               </div>
-              <h3
-                class="heading"
-                style="
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 6px;
-                  font-size: 15px;
-                "
-              >
-                MediCore Equipment
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Best Model</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981;">XGBoost</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Baseline</div>
+                <div style="font-size: 18px; font-weight: 700; color: #94a3b8;">0.748</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 24px; margin-bottom: 24px;">
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">
+              🔍 Top 10 Feature Importance (SHAP Values)
+            </h3>
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 24px;">Features ranked by their average impact on model output</p>
+            <div id="feature-importance-chart">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Credit Score 1</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 85%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.24</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Credit-to-Goods Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 72%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.19</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Days Employed</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 65%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.17</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Utilization</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 58%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.15</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Recent Late Rate</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 52%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.13</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Min Payment Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 48%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.12</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Credit Score 2</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 45%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.11</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Prev Refusal Rate</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 42%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.10</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Income Amount</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 38%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.09</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Active Loan Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 35%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.08</span></div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(51, 65, 85, 0.4); font-size: 11px; color: #64748b;">
+              <span>← Lowers Risk</span>
+              <span style="display: flex; gap: 16px;">
+                <span style="color: #34d399;">● Negative SHAP</span>
+                <span style="color: #f87171;">● Positive SHAP</span>
+              </span>
+              <span>Increases Risk →</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="card" style="padding: 24px;">
+              <h3 class="heading" style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 16px;">
+                📈 Feature Engineering Impact
               </h3>
-              <p style="font-size: 11px; color: #64748b; line-height: 1.5">
-                Moderate history, some late payments, growing external debt
-              </p>
-              <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 8px;
-                  margin-top: 16px;
-                "
-              >
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Revenue: </span
-                  ><span style="color: #cbd5e1">₦165K</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Late: </span
-                  ><span style="color: #cbd5e1">8.0%</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Credit: </span
-                  ><span style="color: #cbd5e1">₦580K</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Ext util: </span
-                  ><span style="color: #cbd5e1">43%</span>
-                </div>
+              <div style="display: flex; align-items: center; justify-content: center; height: 160px;">
+                <svg viewBox="0 0 200 120" width="280" height="160">
+                  <defs>
+                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+                      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid lines -->
+                  <line x1="20" y1="100" x2="180" y2="100" stroke="#334155" stroke-width="1" />
+                  <line x1="20" y1="70" x2="180" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <line x1="20" y1="40" x2="180" y2="40" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <line x1="20" y1="10" x2="180" y2="10" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <!-- Area fill -->
+                  <path d="M 20 100 L 20 85 L 50 75 L 80 60 L 110 45 L 140 30 L 170 20 L 180 15 L 180 100 Z" fill="url(#areaGradient)" />
+                  <!-- Line -->
+                  <polyline points="20,85 50,75 80,60 110,45 140,30 170,20 180,15" fill="none" stroke="#10b981" stroke-width="2" />
+                  <!-- Points -->
+                  <circle cx="20" cy="85" r="4" fill="#10b981" />
+                  <circle cx="50" cy="75" r="4" fill="#10b981" />
+                  <circle cx="80" cy="60" r="4" fill="#10b981" />
+                  <circle cx="110" cy="45" r="4" fill="#10b981" />
+                  <circle cx="140" cy="30" r="4" fill="#10b981" />
+                  <circle cx="170" cy="20" r="4" fill="#10b981" />
+                  <circle cx="180" cy="15" r="4" fill="#10b981" />
+                  <!-- Labels -->
+                  <text x="20" y="115" text-anchor="middle" fill="#64748b" font-size="8">8 cols</text>
+                  <text x="110" y="115" text-anchor="middle" fill="#64748b" font-size="8">17 features</text>
+                  <text x="180" y="115" text-anchor="middle" fill="#64748b" font-size="8">61 features</text>
+                </svg>
+              </div>
+              <div style="text-align: center; margin-top: 12px;">
+                <div style="font-size: 11px; color: #64748b;">AUC Improvement with Feature Engineering</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981; margin-top: 4px;">+0.022 AUC Gain</div>
               </div>
             </div>
 
-            <div
-              class="card card-hover sample-card"
-              onclick="scoreSample('high_risk')"
-              id="card-high_risk"
-              style="padding: 20px"
-            >
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: start;
-                  margin-bottom: 12px;
-                "
-              >
-                <span
-                  style="
-                    font-size: 11px;
-                    padding: 4px 10px;
-                    border-radius: 20px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    background: rgba(239, 68, 68, 0.12);
-                    color: #ef4444;
-                  "
-                  >High Risk</span
-                >
-                <span style="color: #475569">→</span>
-              </div>
-              <h3
-                class="heading"
-                style="
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 6px;
-                  font-size: 15px;
-                "
-              >
-                QuickMed Pharmacy
+            <div class="card" style="padding: 24px;">
+              <h3 class="heading" style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 16px;">
+                💡 Key Insight
               </h3>
-              <p style="font-size: 11px; color: #64748b; line-height: 1.5">
-                New business, frequent late payments, high debt, past refusals
-              </p>
-              <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 8px;
-                  margin-top: 16px;
-                "
-              >
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Revenue: </span
-                  ><span style="color: #cbd5e1">₦75K</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Late: </span
-                  ><span style="color: #cbd5e1">45%</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Credit: </span
-                  ><span style="color: #cbd5e1">₦750K</span>
-                </div>
-                <div
-                  style="
-                    background: rgba(30, 41, 59, 0.5);
-                    border-radius: 8px;
-                    padding: 6px 10px;
-                    font-size: 11px;
-                  "
-                >
-                  <span style="color: #64748b">Ext util: </span
-                  ><span style="color: #cbd5e1">90%</span>
+              <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; height: 160px; display: flex; flex-direction: column; justify-content: center;">
+                <p style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 16px;">
+                  <strong style="color: #f59e0b;">min_payment_ratio</strong> (worst single payment ever made) was far more predictive than any average.
+                </p>
+                <div style="display: flex; gap: 12px;">
+                  <div style="flex: 1; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 10px; color: #64748b;">Good Borrowers</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10b981;">1.0</div>
+                    <div style="font-size: 9px; color: #64748b;">Always paid full</div>
+                  </div>
+                  <div style="flex: 1; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 10px; color: #64748b;">Defaulters</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #ef4444;">0.47</div>
+                    <div style="font-size: 9px; color: #64748b;">Paid &lt; half once</div>
+                  </div>
                 </div>
               </div>
+              <p style="font-size: 11px; color: #64748b; text-align: center; margin-top: 16px;">
+                "Defaulters don't behave badly on average — they behave badly <em>sometimes</em>"
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Custom Input Tab -->
-        <div id="panel-custom" style="display: none"></div>
+        <!-- Score Applicant Tab -->
+        <div id="panel-score" style="display: none"></div>
+
+        <!-- About Tab -->
+        <div id="panel-about" style="display: none">
+          <div class="card" style="padding: 32px; margin-bottom: 24px;">
+            <h2 class="heading" style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 16px;">
+              AI-Powered Credit Risk Scoring
+            </h2>
+            <p style="font-size: 14px; color: #94a3b8; line-height: 1.7; margin-bottom: 24px;">
+              Predict whether a borrower will default on their loan — before it happens. 
+              Built on the Home Credit Default Risk dataset (307K applicants, 13.6M payment records).
+            </p>
+            
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px;">
+              🎯 The Approach
+            </h3>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 24px;">
+              Started with a question: "If I were a credit analyst, what would I want to know?"
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 12px;">
+                <div style="font-size: 24px; margin-bottom: 8px;">👤</div>
+                <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">Who are they?</div>
+                <div style="font-size: 11px; color: #64748b;">Profile, income, employment stability</div>
+              </div>
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 12px;">
+                <div style="font-size: 24px; margin-bottom: 8px;">💳</div>
+                <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">How do they pay us?</div>
+                <div style="font-size: 11px; color: #64748b;">13.6M installment payment records</div>
+              </div>
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 12px;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🏦</div>
+                <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">How do they pay others?</div>
+                <div style="font-size: 11px; color: #64748b;">1.7M external credit bureau records</div>
+              </div>
+            </div>
+
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px;">
+              📊 Feature Engineering (80% of the value)
+            </h3>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 16px;">
+              From 8 raw columns in the installments table, engineered 17 features using a consistent framework:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;">
+              <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                <div style="font-size: 12px; font-weight: 600; color: #10b981;">Level</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Average behavior</div>
+              </div>
+              <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                <div style="font-size: 12px; font-weight: 600; color: #10b981;">Volatility</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Consistency</div>
+              </div>
+              <div style="text-align: center; padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;">
+                <div style="font-size: 12px; font-weight: 600; color: #f59e0b;">Extremes</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Worst behavior</div>
+              </div>
+              <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                <div style="font-size: 12px; font-weight: 600; color: #10b981;">Trends</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Getting better/worse</div>
+              </div>
+              <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                <div style="font-size: 12px; font-weight: 600; color: #10b981;">Recency</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Recent behavior</div>
+              </div>
+            </div>
+
+            <div class="card" style="background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.3); padding: 20px; margin-bottom: 24px;">
+              <h4 style="font-size: 14px; font-weight: 700; color: #f59e0b; margin-bottom: 8px;">💡 Key Insight</h4>
+              <p style="font-size: 13px; color: #94a3b8; line-height: 1.7;">
+                The <strong>min_payment_ratio</strong> (worst single payment someone ever made) was far more predictive than any average. 
+                Defaulters don't behave badly on average — they behave badly <em>sometimes</em>. Their worst moments betray them.
+              </p>
+              <div style="display: flex; gap: 24px; margin-top: 16px;">
+                <div style="flex: 1; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                  <div style="font-size: 11px; color: #64748b;">Good borrowers</div>
+                  <div style="font-size: 18px; font-weight: 700; color: #10b981;">min ratio = 1.0</div>
+                  <div style="font-size: 10px; color: #64748b;">Always paid in full</div>
+                </div>
+                <div style="flex: 1; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                  <div style="font-size: 11px; color: #64748b;">Defaulters</div>
+                  <div style="font-size: 18px; font-weight: 700; color: #ef4444;">min ratio = 0.47</div>
+                  <div style="font-size: 10px; color: #64748b;">Once paid &lt; half</div>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px;">
+              🤖 Model Comparison (61 features from 7 tables)
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+              <div style="padding: 16px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; text-align: center;">
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">Logistic Regression</div>
+                <div style="font-size: 24px; font-weight: 700; color: #94a3b8;">0.748</div>
+                <div style="font-size: 10px; color: #64748b;">AUC</div>
+              </div>
+              <div style="padding: 16px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; text-align: center;">
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">Random Forest</div>
+                <div style="font-size: 24px; font-weight: 700; color: #94a3b8;">0.758</div>
+                <div style="font-size: 10px; color: #64748b;">AUC</div>
+              </div>
+              <div style="padding: 16px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; text-align: center;">
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">Neural Network</div>
+                <div style="font-size: 24px; font-weight: 700; color: #94a3b8;">0.758</div>
+                <div style="font-size: 10px; color: #64748b;">AUC</div>
+              </div>
+              <div style="padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.3);">
+                <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">XGBoost</div>
+                <div style="font-size: 24px; font-weight: 700; color: #10b981;">0.770</div>
+                <div style="font-size: 10px; color: #64748b;">AUC</div>
+              </div>
+            </div>
+
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.7;">
+              <strong>Features &gt; algorithms.</strong> The gap between simplest and best model? Just 0.022 AUC.
+              But adding 20 more features from bureau, credit card, and previous application data improved EVERY model.
+            </p>
+          </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div id="panel-insights" style="display: none">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Total Applicants</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">307K</div>
+              <div style="font-size: 10px; color: #10b981;">+ Dataset Size</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Payment Records</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">13.6M</div>
+              <div style="font-size: 10px; color: #10b981;">+ Installment Data</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Bureau Records</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">1.7M</div>
+              <div style="font-size: 10px; color: #10b981;">+ External Credit</div>
+            </div>
+            <div class="card" style="padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Features</div>
+              <div style="font-size: 32px; font-weight: 700; color: white; margin: 8px 0;">61</div>
+              <div style="font-size: 10px; color: #10b981;">Engineered</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 24px; margin-bottom: 24px;">
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 20px;">
+              📊 Model Performance Comparison (AUC Score)
+            </h3>
+            <div style="display: flex; align-items: flex-end; gap: 24px; height: 200px; padding: 20px 0;">
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 148px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Logistic Regression</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.748</div>
+                </div>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 152px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Random Forest</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.758</div>
+                </div>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 152px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.3), rgba(148, 163, 184, 0.6)); border-radius: 8px 8px 0 0; position: relative;">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">Neural Network</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #94a3b8;">0.758</div>
+                </div>
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div style="width: 60px; height: 170px; background: linear-gradient(180deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.8)); border-radius: 8px 8px 0 0; position: relative; border: 2px solid rgba(16, 185, 129, 0.5);">
+                  <div style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; text-align: center; width: 80px;">XGBoost</div>
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #10b981;">0.770</div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 40px; padding-top: 16px; border-top: 1px solid rgba(51, 65, 85, 0.4);">
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Improvement</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981;">+0.022 AUC</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Best Model</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981;">XGBoost</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 10px; color: #64748b;">Baseline</div>
+                <div style="font-size: 18px; font-weight: 700; color: #94a3b8;">0.748</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 24px; margin-bottom: 24px;">
+            <h3 class="heading" style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">
+              🔍 Top 10 Feature Importance (SHAP Values)
+            </h3>
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 24px;">Features ranked by their average impact on model output</p>
+            <div id="feature-importance-chart">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Credit Score 1</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 85%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.24</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Credit-to-Goods Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 72%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.19</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Days Employed</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 65%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.17</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Utilization</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 58%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.15</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Recent Late Rate</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 52%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.13</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Min Payment Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 48%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.12</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">External Credit Score 2</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 45%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.11</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Prev Refusal Rate</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 42%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.10</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Income Amount</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 38%; background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #34d399;">-0.09</span></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 180px; text-align: right;"><span style="font-size: 11px; color: #94a3b8;">Active Loan Ratio</span></div>
+                <div style="flex: 1; height: 24px; background: rgba(30, 41, 59, 0.5); border-radius: 0 4px 4px 0; position: relative; overflow: hidden;">
+                  <div style="position: absolute; left: 0; top: 0; height: 100%; width: 35%; background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.8));"></div>
+                </div>
+                <div style="width: 60px; text-align: right;"><span style="font-size: 11px; font-weight: 700; color: #f87171;">+0.08</span></div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(51, 65, 85, 0.4); font-size: 11px; color: #64748b;">
+              <span>← Lowers Risk</span>
+              <span style="display: flex; gap: 16px;">
+                <span style="color: #34d399;">● Negative SHAP</span>
+                <span style="color: #f87171;">● Positive SHAP</span>
+              </span>
+              <span>Increases Risk →</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="card" style="padding: 24px;">
+              <h3 class="heading" style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 16px;">
+                📈 Feature Engineering Impact
+              </h3>
+              <div style="display: flex; align-items: center; justify-content: center; height: 160px;">
+                <svg viewBox="0 0 200 120" width="280" height="160">
+                  <defs>
+                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+                      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid lines -->
+                  <line x1="20" y1="100" x2="180" y2="100" stroke="#334155" stroke-width="1" />
+                  <line x1="20" y1="70" x2="180" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <line x1="20" y1="40" x2="180" y2="40" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <line x1="20" y1="10" x2="180" y2="10" stroke="#334155" stroke-width="0.5" stroke-dasharray="4" />
+                  <!-- Area fill -->
+                  <path d="M 20 100 L 20 85 L 50 75 L 80 60 L 110 45 L 140 30 L 170 20 L 180 15 L 180 100 Z" fill="url(#areaGradient)" />
+                  <!-- Line -->
+                  <polyline points="20,85 50,75 80,60 110,45 140,30 170,20 180,15" fill="none" stroke="#10b981" stroke-width="2" />
+                  <!-- Points -->
+                  <circle cx="20" cy="85" r="4" fill="#10b981" />
+                  <circle cx="50" cy="75" r="4" fill="#10b981" />
+                  <circle cx="80" cy="60" r="4" fill="#10b981" />
+                  <circle cx="110" cy="45" r="4" fill="#10b981" />
+                  <circle cx="140" cy="30" r="4" fill="#10b981" />
+                  <circle cx="170" cy="20" r="4" fill="#10b981" />
+                  <circle cx="180" cy="15" r="4" fill="#10b981" />
+                  <!-- Labels -->
+                  <text x="20" y="115" text-anchor="middle" fill="#64748b" font-size="8">8 cols</text>
+                  <text x="110" y="115" text-anchor="middle" fill="#64748b" font-size="8">17 features</text>
+                  <text x="180" y="115" text-anchor="middle" fill="#64748b" font-size="8">61 features</text>
+                </svg>
+              </div>
+              <div style="text-align: center; margin-top: 12px;">
+                <div style="font-size: 11px; color: #64748b;">AUC Improvement with Feature Engineering</div>
+                <div style="font-size: 18px; font-weight: 700; color: #10b981; margin-top: 4px;">+0.022 AUC Gain</div>
+              </div>
+            </div>
+
+            <div class="card" style="padding: 24px;">
+              <h3 class="heading" style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 16px;">
+                💡 Key Insight
+              </h3>
+              <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px; height: 160px; display: flex; flex-direction: column; justify-content: center;">
+                <p style="font-size: 13px; color: #94a3b8; line-height: 1.7; margin-bottom: 16px;">
+                  <strong style="color: #f59e0b;">min_payment_ratio</strong> (worst single payment ever made) was far more predictive than any average.
+                </p>
+                <div style="display: flex; gap: 12px;">
+                  <div style="flex: 1; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 10px; color: #64748b;">Good Borrowers</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #10b981;">1.0</div>
+                    <div style="font-size: 9px; color: #64748b;">Always paid full</div>
+                  </div>
+                  <div style="flex: 1; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 10px; color: #64748b;">Defaulters</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #ef4444;">0.47</div>
+                    <div style="font-size: 9px; color: #64748b;">Paid &lt; half once</div>
+                  </div>
+                </div>
+              </div>
+              <p style="font-size: 11px; color: #64748b; text-align: center; margin-top: 16px;">
+                "Defaulters don't behave badly on average — they behave badly <em>sometimes</em>"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Score Applicant Tab -->
+        <div id="panel-score" style="display: none"></div>
 
         <!-- History Tab -->
         <div id="panel-history" style="display: none"></div>
@@ -601,7 +879,7 @@
           "
         >
           <span
-            >Credit Risk Scoring API • XGBoost + SHAP • 61 Features • 7 Data
+            >Home Credit Risk Scoring • XGBoost + SHAP • 61 Features • 7 Data
             Sources</span
           >
           <span>Built by Oluwajuwon Israel</span>
@@ -619,212 +897,10 @@
       const BACKEND_URL = "/api/v1";
       // ──────────────────────────────────────────────────────────
 
-      // ── Sample provider data ────────────────────────────────────
-      const SAMPLES = {
-        low_risk: {
-          label: "HealthFirst Medical Supplies",
-          data: {
-            AMT_INCOME_TOTAL: 320000,
-            AMT_CREDIT: 450000,
-            AMT_ANNUITY: 22000,
-            AMT_GOODS_PRICE: 420000,
-            DAYS_EMPLOYED: -3200,
-            DAYS_BIRTH: -18500,
-            DAYS_REGISTRATION: -6500,
-            EXT_SOURCE_1: 0.72,
-            EXT_SOURCE_2: 0.78,
-            EXT_SOURCE_3: 0.69,
-            REGION_RATING_CLIENT: 1,
-            CREDIT_TO_INCOME: 1.41,
-            ANNUITY_TO_INCOME: 0.07,
-            CREDIT_TO_GOODS: 1.07,
-            avg_days_past_due: -14.2,
-            avg_payment_ratio: 1.0,
-            late_payment_rate: 0.008,
-            severe_late_rate: 0.0,
-            total_underpayment: 0.0,
-            std_days_past_due: 4.5,
-            std_payment_ratio: 0.0,
-            max_days_past_due: -2,
-            min_payment_ratio: 1.0,
-            total_installments: 72,
-            num_contracts: 5,
-            late_rate_trend: 0.0,
-            payment_ratio_trend: 0.0,
-            recent_late_rate: 0.0,
-            recent_avg_days_late: -11.0,
-            recent_min_payment_ratio: 1.0,
-            num_bureau_records: 8,
-            num_active_loans: 1,
-            num_closed_loans: 7,
-            total_external_debt: 35000,
-            total_external_credit: 950000,
-            total_overdue_amount: 0,
-            max_days_overdue: 0,
-            has_any_overdue: 0,
-            num_credit_types: 2,
-            active_loan_ratio: 0.125,
-            external_utilization: 0.037,
-            pos_months_count: 40,
-            pos_dpd_max: 0,
-            pos_dpd_mean: 0.0,
-            pos_has_dpd: 0,
-            pos_completed_count: 5,
-            pos_active_count: 0,
-            cc_months_count: 30,
-            cc_avg_balance: 15000,
-            cc_max_balance: 40000,
-            cc_avg_credit_limit: 350000,
-            cc_avg_drawings: 12000,
-            cc_dpd_max: 0,
-            cc_has_dpd: 0,
-            cc_min_payment_ratio: 15.0,
-            cc_utilization: 0.04,
-            prev_app_count: 5,
-            prev_approved: 4,
-            prev_refused: 0,
-            prev_avg_credit: 380000,
-            prev_refusal_rate: 0.0,
-          },
-        },
-        medium_risk: {
-          label: "MediCore Equipment Ltd",
-          data: {
-            AMT_INCOME_TOTAL: 165000,
-            AMT_CREDIT: 580000,
-            AMT_ANNUITY: 30000,
-            AMT_GOODS_PRICE: 520000,
-            DAYS_EMPLOYED: -900,
-            DAYS_BIRTH: -13000,
-            DAYS_REGISTRATION: -2000,
-            EXT_SOURCE_1: 0.42,
-            EXT_SOURCE_2: 0.48,
-            EXT_SOURCE_3: 0.39,
-            REGION_RATING_CLIENT: 2,
-            CREDIT_TO_INCOME: 3.52,
-            ANNUITY_TO_INCOME: 0.18,
-            CREDIT_TO_GOODS: 1.12,
-            avg_days_past_due: -3.5,
-            avg_payment_ratio: 1.0,
-            late_payment_rate: 0.08,
-            severe_late_rate: 0.02,
-            total_underpayment: 1200,
-            std_days_past_due: 12.0,
-            std_payment_ratio: 0.15,
-            max_days_past_due: 18,
-            min_payment_ratio: 0.75,
-            total_installments: 25,
-            num_contracts: 2,
-            late_rate_trend: 0.04,
-            payment_ratio_trend: -0.05,
-            recent_late_rate: 0.12,
-            recent_avg_days_late: -1.5,
-            recent_min_payment_ratio: 0.85,
-            num_bureau_records: 6,
-            num_active_loans: 3,
-            num_closed_loans: 3,
-            total_external_debt: 280000,
-            total_external_credit: 650000,
-            total_overdue_amount: 0,
-            max_days_overdue: 0,
-            has_any_overdue: 0,
-            num_credit_types: 3,
-            active_loan_ratio: 0.5,
-            external_utilization: 0.43,
-            pos_months_count: 15,
-            pos_dpd_max: 0,
-            pos_dpd_mean: 0.0,
-            pos_has_dpd: 0,
-            pos_completed_count: 1,
-            pos_active_count: 1,
-            cc_months_count: 10,
-            cc_avg_balance: 80000,
-            cc_max_balance: 120000,
-            cc_avg_credit_limit: 200000,
-            cc_avg_drawings: 30000,
-            cc_dpd_max: 0,
-            cc_has_dpd: 0,
-            cc_min_payment_ratio: 6.0,
-            cc_utilization: 0.4,
-            prev_app_count: 3,
-            prev_approved: 2,
-            prev_refused: 1,
-            prev_avg_credit: 300000,
-            prev_refusal_rate: 0.33,
-          },
-        },
-        high_risk: {
-          label: "QuickMed Pharmacy",
-          data: {
-            AMT_INCOME_TOTAL: 75000,
-            AMT_CREDIT: 750000,
-            AMT_ANNUITY: 42000,
-            AMT_GOODS_PRICE: 680000,
-            DAYS_EMPLOYED: -200,
-            DAYS_BIRTH: -9500,
-            DAYS_REGISTRATION: -400,
-            EXT_SOURCE_1: 0.12,
-            EXT_SOURCE_2: 0.18,
-            EXT_SOURCE_3: 0.09,
-            REGION_RATING_CLIENT: 3,
-            CREDIT_TO_INCOME: 10.0,
-            ANNUITY_TO_INCOME: 0.56,
-            CREDIT_TO_GOODS: 1.1,
-            avg_days_past_due: 18.0,
-            avg_payment_ratio: 0.65,
-            late_payment_rate: 0.45,
-            severe_late_rate: 0.18,
-            total_underpayment: 65000,
-            std_days_past_due: 28.0,
-            std_payment_ratio: 0.55,
-            max_days_past_due: 72,
-            min_payment_ratio: 0.15,
-            total_installments: 6,
-            num_contracts: 1,
-            late_rate_trend: 0.25,
-            payment_ratio_trend: -0.35,
-            recent_late_rate: 0.6,
-            recent_avg_days_late: 25.0,
-            recent_min_payment_ratio: 0.2,
-            num_bureau_records: 12,
-            num_active_loans: 8,
-            num_closed_loans: 4,
-            total_external_debt: 650000,
-            total_external_credit: 720000,
-            total_overdue_amount: 45000,
-            max_days_overdue: 75,
-            has_any_overdue: 1,
-            num_credit_types: 4,
-            active_loan_ratio: 0.67,
-            external_utilization: 0.9,
-            pos_months_count: 3,
-            pos_dpd_max: 25,
-            pos_dpd_mean: 4.5,
-            pos_has_dpd: 1,
-            pos_completed_count: 0,
-            pos_active_count: 2,
-            cc_months_count: 4,
-            cc_avg_balance: 190000,
-            cc_max_balance: 200000,
-            cc_avg_credit_limit: 200000,
-            cc_avg_drawings: 55000,
-            cc_dpd_max: 20,
-            cc_has_dpd: 1,
-            cc_min_payment_ratio: 1.5,
-            cc_utilization: 0.95,
-            prev_app_count: 7,
-            prev_approved: 1,
-            prev_refused: 5,
-            prev_avg_credit: 180000,
-            prev_refusal_rate: 0.71,
-          },
-        },
-      };
-
       const FEATURE_GROUPS = [
         {
-          name: "Provider Profile",
-          icon: "🏥",
+          name: "Applicant Profile",
+          icon: "👤",
           fields: [
             "AMT_INCOME_TOTAL",
             "AMT_CREDIT",
@@ -870,23 +946,25 @@
       ];
 
       let history = [];
-      let selectedSample = null;
+
+      // Show insights on load (default)
+      document.getElementById("panel-insights").style.display = "block";
 
       // ── Tab switching ───────────────────────────────────────
       function switchTab(tab) {
-        ["samples", "custom", "history"].forEach((t) => {
+        ["insights", "score", "about", "history"].forEach((t) => {
           document.getElementById(`panel-${t}`).style.display =
             t === tab ? "block" : "none";
           document.getElementById(`tab-${t}`).className =
             `tab-btn ${t === tab ? "tab-active" : "tab-inactive"}`;
         });
-        if (tab === "custom") buildCustomForm();
+        if (tab === "score") buildCustomForm();
         if (tab === "history") renderHistory();
       }
 
       // ── Build custom input form ─────────────────────────────
       function buildCustomForm() {
-        const panel = document.getElementById("panel-custom");
+        const panel = document.getElementById("panel-score");
         let html = "";
         FEATURE_GROUPS.forEach((group) => {
           html += `<div class="card" style="padding: 20px; margin-bottom: 16px;">
@@ -934,16 +1012,6 @@
         panel.innerHTML = html;
       }
 
-      // ── Score sample ────────────────────────────────────────
-      function scoreSample(key) {
-        selectedSample = key;
-        document
-          .querySelectorAll(".sample-card")
-          .forEach((c) => (c.style.borderColor = "rgba(51,65,85,0.4)"));
-        document.getElementById(`card-${key}`).style.borderColor = "#64748b";
-        callAPI(SAMPLES[key].data, SAMPLES[key].label);
-      }
-
       // ── Score custom ────────────────────────────────────────
       function scoreCustom() {
         const data = { AMT_INCOME_TOTAL: 0, AMT_CREDIT: 0 };
@@ -953,7 +1021,7 @@
             if (el && el.value) data[f] = parseFloat(el.value);
           }),
         );
-        callAPI(data, "Custom Input");
+        callAPI(data, "Applicant");
       }
 
       // ── API call ────────────────────────────────────────────
